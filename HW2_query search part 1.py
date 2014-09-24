@@ -1,9 +1,8 @@
-''' Sidharth Sudhakar Nandury
+﻿''' Sidharth Sudhakar Nandury
     Python Programming HW - 2 Part 1
     Query Search
     Due date: 9/26/2014
 '''
-
 data_list=["And now here is my secret, a very simple secret: It is only with the heart that one can see rightly; what is essential is invisible to the eye.",
 "All grown-ups were once children... but only few of them remember it.",
 "People have forgotten this truth,\" the fox said. \"But you mustn’t forget it. You become responsible forever for what you’ve tamed. You’re responsible for your rose.",
@@ -87,7 +86,8 @@ data_list=["And now here is my secret, a very simple secret: It is only with the
 "It's good to have a friend. Even if you're going to die.",
 "If you love a flower that lives on a star, then it's good at night, to look up at the sky. All the stars are blossoming."]
 query=input("query: ")
-query = query.strip(" ").split() #get rid of the front and rear spaces, space being the delimiter and split query to remove 'logical' operator
+query = query.strip(" ") #get rid of the front and rear spaces, space being the delimiter
+query=query.split()              #query to remove 'logical' operator
 query = list(set(query))         #removes repeated items from the list and converting back to list from set
 
 
@@ -99,41 +99,34 @@ if ("or" in query) and ("and" not in query):    #if "or" is present in the query
             if (item in quote):
                 index0 = quote.index(item)
                 print("Found:", i, "...", quote[index0:index0+50],"...")
-
-
-elif ("and" in query) and ("or" not in query):   #if "and" in query and "or" not in query 
-    query.remove("and")                          
-    print("Performing AND search for: ", query)
+                
+#if "and" in query or neither "and" nor "or" in query or both "and" and "or" in query
+elif ("and" in query) or (len(query)>1 and ("and" not in query)and("or" not in query)):
+    if "and" in query:
+        query.remove("and")
+    if "or" in query:
+        query.remove("or")
+    print ("Performing AND search for: ",query)
     for i,quote in enumerate(data_list):
-        if (query[0] in quote) and (query[1] in quote):
-            print("Found:", i, "...", quote[:500],"...")
-            print("")
+        count = 0
+        index0 = 1000 
+        for item in query:
+            if item in quote:
+                count = count + 1
+                print(count)
+                index1 = quote.index(item)
+                print(index1)
+                if index1 < index0:
+                    index0 = index1
+        if (count==len(query)):
+            print("Found:", i, "...", quote[index0:index1+100], "...")   
 
-elif (('and' not in query) and ('or' not in query) and (len(query)>1)):#if neither "and" nor "or" in query
-    print("Performing AND search for: ", query)
-    for i,quote in enumerate(data_list):
-        if (query[0] in quote) and (query[1] in quote):
-            print("Found:", i, "...", quote[:500],"...")
-            print("")
-
-elif(('and' in query) and ('or' in query)):
-    query.remove("and")
-    query.remove("or")
-    print("Performing AND search for: ", query)
-    for i,quote in enumerate(data_list):
-        if (query[0] in quote) and (query[1] in quote):
-            print("Found:", i, "...", quote[:500],"...")
-            print("")
-    
-
-elif (len(query)==1):                               #if query is a single string
+elif (len(query)==1):            #if query is a single string
     print ("Searching for: ",query)
     for i,quote in enumerate(data_list):
         found_at = quote.find(query[0])
         if query[0] in quote:
             print("Found:", i, "..."+quote[found_at:found_at + 50], "...")
-
-
 
 
 
