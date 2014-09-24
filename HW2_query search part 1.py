@@ -113,9 +113,7 @@ elif ("and" in query) or (len(query)>1 and ("and" not in query)and("or" not in q
         for item in query:
             if item in quote:
                 count = count + 1
-                print(count)
                 index1 = quote.index(item)
-                print(index1)
                 if index1 < index0:
                     index0 = index1
         if (count==len(query)):
